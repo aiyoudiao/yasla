@@ -8,8 +8,8 @@
     "coverage": "vitest run --coverage",
     "dev": "tsc --watch",
     "build": "tsc",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint": "eslint src/**",
+    "lint:fix": "eslint src/** --fix",
     "version": "changeset version",
     "publish": "changeset publish",
     "relase": "bumpp --commit --tag --push && git push origin --tags -f && changeset publish"
