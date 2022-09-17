@@ -1,0 +1,39 @@
+{
+  "name": "yasla",
+  "version": "1.0.0",
+  "description": "[99 dog head] crushed to death, thunder that collapse Zijin hammer, purple electricity that nine days Xuan electric gun change. It's sharp, but it's heady. Shine, baby.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aiyoudiao/yasla.git"
+  },
+  "keywords": [
+    "compress"
+  ],
+  "author": "aiyoudiao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aiyoudiao/yasla/issues"
+  },
+  "homepage": "https://github.com/aiyoudiao/yasla#readme",
+  "devDependencies": {
+    "@changesets/cli": "^2.24.4"
+  },
+  "dependencies": {
+    "boxen": "^7.0.0",
+    "chalk": "^5.0.1",
+    "chokidar": "^3.5.3",
+    "commander": "^9.4.0",
+    "fast-glob": "^3.2.12",
+    "figlet": "^1.5.2",
+    "file-type": "^18.0.0",
+    "fs-extra": "^10.1.0",
+    "listr": "^0.14.3",
+    "package-json": "^8.1.0",
+    "semver": "^7.3.7",
+    "unconfig": "^0.3.6"
+  }
+}
