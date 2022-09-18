@@ -2,7 +2,11 @@
   "name": "yasla",
   "version": "1.0.0",
   "description": "[99 dog head] crushed to death, thunder that collapse Zijin hammer, purple electricity that nine days Xuan electric gun change. It's sharp, but it's heady. Shine, baby.",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "bin": {
+    "yasla": "./bin/yasla"
+  },
   "scripts": {
     "test": "vitest --dir test -u",
     "coverage": "vitest run --coverage",

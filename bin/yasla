@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+require('../lib/index.js')
+const pkgJson = require('../package.json')
+console.log(pkgJson.description)
