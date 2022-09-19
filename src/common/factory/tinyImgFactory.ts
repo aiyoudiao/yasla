@@ -11,20 +11,40 @@
  * --------------------------------------------------------------------------- *
  */
 
+import type { RequestOptions } from 'https'
+import path from 'node:path'
 import type { IRequestOption } from '../builder/requestBuilder'
 import { RequestBuiler } from '../builder/requestBuilder'
 import { DownloadCommand, RequestClient, SubmitCommand } from '../command/requestCommand'
+import { mkdir } from '../utils'
 
 export enum ImagesNameEnum {
-  webp = 'image/webp',
-  jpeg = 'image/jpeg',
-  png = 'image/png',
-  jpg = 'image/jpg',
-  jfif = 'image/jfif',
+  'image/webp' = 'image/webp',
+  'image/jpeg' = 'image/jpeg',
+  'image/png' = 'image/png',
+  'image/jpg' = 'image/jpg',
+  'image/jfif' = 'image/jfif',
 }
 
 export interface ITinyImg {
-  handle(): void
+  handle(filePath: string, outputPath: string): Promise<string>
+}
+
+interface TinyResponse {
+  error?: string
+  message?: string
+  input: {
+    size: number
+    type: string
+  }
+  output: {
+    size: number
+    type: string
+    width: number
+    height: number
+    ratio: number
+    url: string
+  }
 }
 
 export class TinyImgFactory {
@@ -63,16 +83,33 @@ class Img implements ITinyImg {
     this.downloadCommand = new DownloadCommand(this.requestClinet)
   }
 
-  handle(): void {
+  async handle(filePath: string, outputPath: string): Promise<string> {
     // TODO 调用那两个命令来进行图片的压缩和下载
+    const result = await this.submitCommand.handle<TinyResponse>(this.option as RequestOptions, filePath)
+    // console.log('log:result', result)
+    const {
+      // input: { size: s1 },
+      output: { url },
+    } = result
+
+    const filename = path.relative(
+      path.dirname(filePath),
+      filePath,
+    )
+    const newFile = path.join(outputPath, filename)
+    mkdir(newFile)
+
+    return await this.downloadCommand.handle(url, newFile)
+
+    // TODO 暂时不做多余的处理
   }
 }
 
 const img = new Img()
 // 给这个工厂添加产品
 TinyImgFactory
-  .addTinyImg(ImagesNameEnum.webp, img)
-  .addTinyImg(ImagesNameEnum.jpeg, img)
-  .addTinyImg(ImagesNameEnum.png, img)
-  .addTinyImg(ImagesNameEnum.jpg, img)
-  .addTinyImg(ImagesNameEnum.jfif, img)
+  .addTinyImg(ImagesNameEnum['image/webp'], img)
+  .addTinyImg(ImagesNameEnum['image/jpeg'], img)
+  .addTinyImg(ImagesNameEnum['image/png'], img)
+  .addTinyImg(ImagesNameEnum['image/jpg'], img)
+  .addTinyImg(ImagesNameEnum['image/jfif'], img)

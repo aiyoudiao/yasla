@@ -26,6 +26,7 @@ export class BasicVisitor implements IVisitor {
   out: any
   loading: any
   executing: boolean
+  chokidar: any
 
   constructor(context: IYaslaContext) {
     this.context = context
@@ -33,6 +34,7 @@ export class BasicVisitor implements IVisitor {
     this.chalk = context.chalk
     // this.boxen = context.boxen;
     this.inquirer = context.inquirer
+    this.chokidar = context.chokidar
     this.version = context.version
     this.out = context.out
     this.loading = context.loading

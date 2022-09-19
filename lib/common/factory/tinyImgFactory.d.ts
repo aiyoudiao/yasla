@@ -1,12 +1,12 @@
 export declare enum ImagesNameEnum {
-    webp = "image/webp",
-    jpeg = "image/jpeg",
-    png = "image/png",
-    jpg = "image/jpg",
-    jfif = "image/jfif"
+    'image/webp' = "image/webp",
+    'image/jpeg' = "image/jpeg",
+    'image/png' = "image/png",
+    'image/jpg' = "image/jpg",
+    'image/jfif' = "image/jfif"
 }
 export interface ITinyImg {
-    handle(): void;
+    handle(filePath: string, outputPath: string): Promise<string>;
 }
 export declare class TinyImgFactory {
     static map: Map<ImagesNameEnum, ITinyImg>;

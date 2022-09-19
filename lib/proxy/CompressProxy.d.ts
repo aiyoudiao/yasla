@@ -1,9 +1,9 @@
-import { ImagesNameEnum } from "../common/factory/tinyImgFactory";
+import type { ImagesNameEnum } from '../common/factory/tinyImgFactory';
 interface ICompress {
-    compress(key: ImagesNameEnum): void;
+    compress(key: ImagesNameEnum, filePath: string, outputPath: string): Promise<string | void>;
 }
 export declare class ImgCompress implements ICompress {
     constructor();
-    compress(key: ImagesNameEnum): void;
+    compress(key: ImagesNameEnum, filePath: string, outputPath: string): Promise<string | void>;
 }
 export {};

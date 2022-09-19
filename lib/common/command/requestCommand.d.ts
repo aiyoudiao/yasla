@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { RequestOptions } from 'node:https';
+import type { RequestOptions } from 'node:https';
 interface ISubmitCommand {
     handle<ResponseResult>(option: RequestOptions, filePath: string): Promise<ResponseResult>;
 }

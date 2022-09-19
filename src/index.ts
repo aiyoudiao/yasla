@@ -23,9 +23,9 @@ import type { Chalk } from 'chalk'
 import chalk from 'chalk'
 import type { Inquirer } from 'inquirer'
 import inquirer from 'inquirer'
+import chokidar from 'chokidar'
 import visitStart from './supervisor'
 // import boxen from 'boxen'
-// import chokidar from 'chokidar'
 // import fse from 'fs-extra'
 // import fg from 'fast-glob'
 // import { fileTypeFromFile } from 'file-type'
@@ -41,6 +41,7 @@ export interface IYaslaContext {
   version: any
   out: any
   loading: any
+  chokidar: any
 }
 
 class Yasla implements IYaslaContext {
@@ -48,6 +49,7 @@ class Yasla implements IYaslaContext {
   chalk: Chalk
   // boxen: any
   inquirer: Inquirer
+  chokidar: any
   version: any
   out: any
   loading: any
@@ -59,6 +61,11 @@ class Yasla implements IYaslaContext {
     this.chalk = chalk
     // this.boxen = boxen
     this.inquirer = inquirer
+    this.chokidar = chokidar
+    // const log = global.console.log
+    // global.console.log = function (...list) {
+    //   // log(...list)
+    // }
   }
 
   async init() {
@@ -71,8 +78,8 @@ class Yasla implements IYaslaContext {
 
   async parseInputParam() {
     program.parse(process.argv)
-    const options = program.opts()
-    console.log('options', options)
+    // const options = program.opts()
+    // console.log('options', options)
   }
 
   async checkVersion() {
