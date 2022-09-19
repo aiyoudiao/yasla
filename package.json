@@ -1,9 +1,9 @@
 {
   "name": "yasla",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "[99 dog head] crushed to death, thunder that collapse Zijin hammer, purple electricity that nine days Xuan electric gun change. It's sharp, but it's heady. Shine, baby.",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
+  "main": "./lib/index.js",
+  "module": "./lib/index.js",
   "bin": {
     "yasla": "./bin/yasla"
   },
