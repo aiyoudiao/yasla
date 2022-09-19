@@ -10,8 +10,8 @@
  * Copyright (c) 2022 哎哟迪奥(码二)                                                 *
  * --------------------------------------------------------------------------- *
  */
-import fs from 'node:fs'
-import path from 'node:path'
+import fs from 'fs'
+import path from 'path'
 import fg from 'fast-glob'
 
 export async function getFilesByGlob(inputPath: string) {

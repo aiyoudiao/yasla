@@ -1,9 +1,9 @@
 export declare enum ImagesNameEnum {
-    'image/webp' = "image/webp",
-    'image/jpeg' = "image/jpeg",
-    'image/png' = "image/png",
-    'image/jpg' = "image/jpg",
-    'image/jfif' = "image/jfif"
+    "image/webp" = "image/webp",
+    "image/jpeg" = "image/jpeg",
+    "image/png" = "image/png",
+    "image/jpg" = "image/jpg",
+    "image/jfif" = "image/jfif"
 }
 export interface ITinyImg {
     handle(filePath: string, outputPath: string): Promise<string>;
