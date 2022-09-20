@@ -12,10 +12,14 @@
  */
 
 import type { RequestOptions } from 'https'
-import path from 'node:path'
+import path from 'path'
 import type { IRequestOption } from '../builder/requestBuilder'
 import { RequestBuiler } from '../builder/requestBuilder'
-import { DownloadCommand, RequestClient, SubmitCommand } from '../command/requestCommand'
+import {
+  DownloadCommand,
+  RequestClient,
+  SubmitCommand,
+} from '../command/requestCommand'
 import { mkdir } from '../utils'
 
 export enum ImagesNameEnum {
@@ -76,26 +80,28 @@ class Img implements ITinyImg {
       .setMethod('POST')
       .setHeaders({
         'User-Agent':
-                    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36',
-      }).build().toResult()
-    this.requestClinet = new RequestClient ()
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36',
+      })
+      .build()
+      .toResult()
+    this.requestClinet = new RequestClient()
     this.submitCommand = new SubmitCommand(this.requestClinet)
     this.downloadCommand = new DownloadCommand(this.requestClinet)
   }
 
   async handle(filePath: string, outputPath: string): Promise<string> {
     // TODO 调用那两个命令来进行图片的压缩和下载
-    const result = await this.submitCommand.handle<TinyResponse>(this.option as RequestOptions, filePath)
+    const result = await this.submitCommand.handle<TinyResponse>(
+      this.option as RequestOptions,
+      filePath,
+    )
     // console.log('log:result', result)
     const {
       // input: { size: s1 },
       output: { url },
     } = result
 
-    const filename = path.relative(
-      path.dirname(filePath),
-      filePath,
-    )
+    const filename = path.relative(path.dirname(filePath), filePath)
     const newFile = path.join(outputPath, filename)
     mkdir(newFile)
 
@@ -107,8 +113,7 @@ class Img implements ITinyImg {
 
 const img = new Img()
 // 给这个工厂添加产品
-TinyImgFactory
-  .addTinyImg(ImagesNameEnum['image/webp'], img)
+TinyImgFactory.addTinyImg(ImagesNameEnum['image/webp'], img)
   .addTinyImg(ImagesNameEnum['image/jpeg'], img)
   .addTinyImg(ImagesNameEnum['image/png'], img)
   .addTinyImg(ImagesNameEnum['image/jpg'], img)

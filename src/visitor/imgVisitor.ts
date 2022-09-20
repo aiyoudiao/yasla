@@ -10,8 +10,8 @@
  * Copyright (c) 2022 哎哟迪奥(码二)                                                 *
  * --------------------------------------------------------------------------- *
  */
-import path from 'node:path'
-import { cwd } from 'node:process'
+import path from 'path'
+import { cwd } from 'process'
 import type { ListrTask } from 'listr'
 import Listr from 'listr'
 import { fromFile } from 'file-type'
@@ -56,20 +56,25 @@ export default class imgVisitor extends BasicVisitor {
     }
     else {
       // 带监听的压缩
-      this.chokidar.watch(path.resolve(cwd(), inputPath)).on('all', this.compressHandler.bind(this, outputPath))
+      this.chokidar
+        .watch(path.resolve(cwd(), inputPath))
+        .on('all', this.compressHandler.bind(this, outputPath))
     }
   }
 
   async batchCompressHandler(inputPath: string, outputPath: string) {
     // TODO 读取当前目录下所有的图片资源，然后以遍历的方式，调用这个任务，让这个任务成功
     const files = await getFilesByGlob(inputPath)
-    files.filter(async (filePath) => {
-      const { mime = '' } = await fromFile(filePath) || {}
-      const keyName = mime as ImagesNameEnum
-      return Boolean(ImagesNameEnum[keyName])
-    })
-    // .forEach(async (filePath) => await this.singlecompressHandler(filePath, outputPath))
-      .forEach(filePath => taskList.add(this.createTask(filePath, outputPath)))
+    files
+      .filter(async (filePath) => {
+        const { mime = '' } = (await fromFile(filePath)) || {}
+        const keyName = mime as ImagesNameEnum
+        return Boolean(ImagesNameEnum[keyName])
+      })
+      // .forEach(async (filePath) => await this.singlecompressHandler(filePath, outputPath))
+      .forEach(filePath =>
+        taskList.add(this.createTask(filePath, outputPath)),
+      )
     // const taskList = new Listr(files.map(filePath => this.createTask(filePath, outputPath)));
     taskList.run()
   }
@@ -91,10 +96,14 @@ export default class imgVisitor extends BasicVisitor {
   }
 
   async singlecompressHandler(filePath: string, outputPath: string) {
-    const { mime = '' } = await fromFile(filePath) || {}
+    const { mime = '' } = (await fromFile(filePath)) || {}
     // console.log('log:singlecompressHandler', mime)
     // 获取文件后缀名以及文件类型
-    return await this.imgCompress.compress(mime as unknown as ImagesNameEnum, filePath, outputPath)
+    return await this.imgCompress.compress(
+      mime as unknown as ImagesNameEnum,
+      filePath,
+      outputPath,
+    )
   }
 
   createTask(filePath: string, outputPath: string): ListrTask {
@@ -120,21 +129,27 @@ export default class imgVisitor extends BasicVisitor {
 
   interactiveEventHandler() {
     // TODO 带有交互性的来告诉你要对哪个目录进行监听和处理，会询问你inputPath 和 outputPath，都正确的话，才会处理
-    setTimeout(() => {
+    setTimeout(async () => {
       if (this.executing)
         return
 
-      this.inquirerHandler().then((param: { filePath: string; dirPath: string; isConfirm: boolean }) => {
-        const { filePath, dirPath, isConfirm } = param
+      await this.inquirerHandler()
+        .then(
+          async (param: {
+            inputPath: string
+            outputPath: string
+            isConfirm: boolean
+          }) => {
+            const { inputPath, outputPath, isConfirm } = param
 
-        // console.log('param', param)
-        if (!isConfirm) {
-          // console.log('路径不对，重新开始')
-          return
-        }
+            if (!isConfirm) {
+              // console.log('路径不对，重新开始')
+              return
+            }
 
-        this.actionHandler(filePath, dirPath)
-      })
+            await this.actionHandler(inputPath, outputPath)
+          },
+        )
         .catch((err: Error) => {
           console.log(err)
         })

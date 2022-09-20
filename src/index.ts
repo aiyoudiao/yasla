@@ -10,9 +10,9 @@
  * Copyright (c) 2022 哎哟迪奥(码二)                                            *
  * --------------------------------------------------------------------------- *
  */
-import path from 'node:path'
-import { cwd } from 'node:process'
-// import fs from 'node:fs'
+import path from 'path'
+import { cwd } from 'process'
+// import fs from 'fs'
 import { Command } from 'commander'
 import type { PackageJson } from 'pkg-types'
 import { readPackageJSON } from 'pkg-types'

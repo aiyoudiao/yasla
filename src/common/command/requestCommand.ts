@@ -10,9 +10,9 @@
  * Copyright (c) 2022 哎哟迪奥(码二)                                                 *
  * --------------------------------------------------------------------------- *
  */
-import fs from 'node:fs'
-import type { RequestOptions } from 'node:https'
-import https from 'node:https'
+import fs from 'fs'
+import type { RequestOptions } from 'https'
+import https from 'https'
 
 interface ISubmitCommand {
   handle<ResponseResult>(option: RequestOptions, filePath: string): Promise<ResponseResult>
