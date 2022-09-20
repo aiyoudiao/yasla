@@ -71,7 +71,7 @@ class Yasla implements IYaslaContext {
   async init() {
     this.localPkg = await readPackageJSON(currentPkgFilePath)
     this.onlinePkg = await packageJson(this.localPkg.name!)
-    // await this.checkVersion()
+    await this.checkVersion()
     await this.initCommand()
     await this.parseInputParam()
   }
@@ -87,7 +87,7 @@ class Yasla implements IYaslaContext {
       const { localPkg, onlinePkg } = this
       const version = onlinePkg.version as string
       if (localPkg.version && version && semver.lt(localPkg.version, version))
-        console.log(chalk.bgRed('please upgrade!'))
+        console.log(chalk.bgRed(`Please update the version to yasla@${version}`))
     }
     catch (error) { }
   }
